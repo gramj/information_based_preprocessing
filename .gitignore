@@ -1,0 +1,11 @@
+__pycache__
+*.docx
+*.pyc
+*.xlsx
+.git
+.venv
+.vscode
+models
+output
+poetry.lock
+venv
