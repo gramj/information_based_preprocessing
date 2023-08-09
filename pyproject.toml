@@ -2,7 +2,10 @@
 name = "information-based-preprocessing"
 version = "1.0.0"
 description = ""
-authors = ["jog <jonas.gram@ipa.fraunhofer.de>"]
+authors = [
+    "jog <jonas.gram@ipa.fraunhofer.de>",
+    "bgs <brandon.sai@ipa.fraunhofer.de>"
+]
 license = "GNU Lesser General Public License v3.0"
 readme = "README.md"
 packages = [{include = "information_based_preprocessing"}]

@@ -39,3 +39,8 @@ please consider citing the following paper:
       primaryClass={eess.SY}
 }
 ```
+
+# Contact
+If you have any questions, feel free to contact Jonas Gram through E-Mail (jonas.gram@ipa.fraunhofer.de)
+or Github issues.  
+Pull requests are highly welcomed!  
