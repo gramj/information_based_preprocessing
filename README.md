@@ -41,6 +41,5 @@ please consider citing the following paper:
 ```
 
 # Contact
-If you have any questions, feel free to contact Jonas Gram through E-Mail (jonas.gram@ipa.fraunhofer.de)
+If you have any questions, feel free to contact Jonas Gram through E-Mail (jonasgram95@gmail.com)
 or Github issues.  
-Pull requests are highly welcomed!  
