@@ -104,13 +104,12 @@ def clean_header(data: pd.DataFrame) -> pd.DataFrame:
     -------
     pd.DataFrame : the input DataFrame with cleaned column names
     """
-    data.columns = data.columns.str.replace("ü", "ue")
-    data.columns = data.columns.str.replace("Ü", "Ue")
-    data.columns = data.columns.str.replace("ä", "ae")
-    data.columns = data.columns.str.replace("Ä", "Ae")
-    data.columns = data.columns.str.replace("ö", "oe")
-    data.columns = data.columns.str.replace("Ö", "Oe")
-    data.columns = data.columns.str.replace("ß", "ss")
-    data.columns = data.columns.str.replace(" ", "_")
-    data.columns = data.columns.str.replace("\"", "")
+    translation_table = str.maketrans({
+        'ü': 'ue', 'Ü': 'Ue',
+        'ä': 'ae', 'Ä': 'Ae',
+        'ö': 'oe', 'Ö': 'Oe',
+        'ß': 'ss', ' ': '_',
+        '\"': ''
+    })
+    data.columns = [col.translate(translation_table) for col in data.columns]
     return data

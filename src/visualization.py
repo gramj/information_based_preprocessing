@@ -19,22 +19,25 @@ def plot_oneD_fft(x: List[float],
     """
     Plot 1D Fast Fourier Transform either as a scatter plot or as a stem plot.
     
-    Parameters:
-    - x: List of x-axis values.
-    - y: List of y-axis values.
-    - title: The title of the plot.
-    - x_lim: Tuple containing limits for the x-axis.
-    - y_lim: Upper limit for the y-axis.
-    - x_label: Label for the x-axis.
-    - y_label: Label for the y-axis.
-    - x_ticks: Points to be emphasized on the x-axis.
-    - path: Directory path where the plot image will be saved.
-    - variant: Integer determining the type of plot (0 for scatter, otherwise stem).
-    - color: Color for the scatter plot.
-    - y_lim_2: Optional bottom limit for the y-axis. If not provided, it will default to the minimum y value.
+    Parameters
+    ----------
+    x : List of x-axis values.
+    y : List of y-axis values.
+    title : The title of the plot.
+    x_lim : Tuple containing limits for the x-axis.
+    y_lim : Upper limit for the y-axis.
+    x_label : Label for the x-axis.
+    y_label : Label for the y-axis.
+    x_ticks : Points to be emphasized on the x-axis.
+    path : Directory path where the plot image will be saved.
+    variant : Integer determining the type of plot (0 for scatter, otherwise stem).
+    color : Color for the scatter plot.
+    y_lim_2 : Optional bottom limit for the y-axis. If not provided, it will default to the minimum y value.
     
-    Returns:
-    None. The function saves the plot to the specified directory.
+    Returns
+    -------
+    None
+        The function saves the plot to the specified directory.
     """
     os.makedirs(path, exist_ok=True)
     size_1 = 40

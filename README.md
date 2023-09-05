@@ -9,7 +9,8 @@ This repository covers:
  - cycle cutting of the data
 
 # Run
-Execute main.py
+Poetry install  
+Execute main.py  
 
 # Datasets
 Information regarding the PLC datasets are contained in the 'meta_data_i.log' files.  

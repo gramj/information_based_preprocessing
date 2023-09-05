@@ -59,25 +59,25 @@ def cut_cycles(data: pd.DataFrame, cyclic_signal: str, true_cycle_time: float,
     cycle_anomaly_counter = 0
     cycle_start_indices = [0]
     for i in range(1, len(cycle_indices)):
-        if cycle_indices[i] > cycle_indices[i-1]:
+        if cycle_indices.iloc[i] > cycle_indices.iloc[i-1]:
             cycle_time = data.index[i-1] - data.index[cycle_start_indices[-1]]
             if cycle_time.total_seconds() < true_cycle_time * 0.75:
                 cycle_anomaly_counter += 1
                 if cycle_anomaly_counter > 0:
                     cycle_time_next = data.index[i] - data.index[cycle_start_indices[-1]]
                     if cycle_time_next.total_seconds() >= true_cycle_time * 0.75:
-                        new_cycle_number[cycle_indices > cycle_indices[cycle_start_indices[-1]]] -= \
+                        new_cycle_number[cycle_indices > cycle_indices.iloc[cycle_start_indices[-1]]] -= \
                             cycle_anomaly_counter
                         cycle_anomaly_counter = 0
             else:
                 if cycle_anomaly_counter > 0:
-                    new_cycle_number[cycle_indices > cycle_indices[cycle_start_indices[-1]]] -= \
+                    new_cycle_number[cycle_indices > cycle_indices.iloc[cycle_start_indices[-1]]] -= \
                         cycle_anomaly_counter
                     cycle_anomaly_counter = 0
             if not cycle_anomaly_counter:
                 cycle_start_indices.append(i)
     if cycle_anomaly_counter > 0:
-        new_cycle_number[cycle_indices > cycle_indices[cycle_start_indices[-1]]] -= cycle_anomaly_counter
+        new_cycle_number[cycle_indices > cycle_indices.iloc[cycle_start_indices[-1]]] -= cycle_anomaly_counter
 
     cycled_data["cycle_number"] = new_cycle_number
     new_cycle_start_timestamps = cycled_data.index[cycle_start_indices]
