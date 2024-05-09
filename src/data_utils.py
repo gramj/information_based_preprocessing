@@ -38,7 +38,7 @@ def distribution(data_name: str) -> Information:
     parser = get_parser_ibp()
     args = parser.parse_args() 
 
-    cycle_version = 0
+    cycle_version = 0 # single signal based cycle cutting
 
     id = datetime.now().strftime("%d%m%Y_%H%M%S")
     output_path = pathlib.Path(f"output/{data_name}")
@@ -58,10 +58,7 @@ def distribution(data_name: str) -> Information:
     data = data.rename(columns={"Timestamp": "timestamp"})
 
     if data_name == 'LAB_PLC_BINARY':
-        cycle_version = 1
-        # subprocess_labels = data['State'].str.extract('(\d+)').astype(int).squeeze()
-        # cycle_labels = data['Cycle'].str.extract('(\d+)').astype(int).squeeze()
-        data = data.drop(columns=['Cycle', 'State', 'Root_Cause'], errors="ignore")
+        cycle_version = 1 # dual signal based cycle cutting
     data = data.replace({False: 0, True: 1})
     data.reset_index(inplace=True, drop=True)
     
