@@ -1,15 +1,14 @@
-import os
-import json
 import logging
 import pathlib
+import ujson
 import pandas as pd
 from datetime import datetime
 
+from src.baseclasses.detector_information import Information
+from src.baseclasses.processing_parameters import ProcessingParameters
 from src.configuration.config import get_parser_ibp
 from src.monitoring import execution_time_runtime
 from src.processing import data_preprocessing, data_postprocessing
-from src.baseclasses.processing_parameters import ProcessingParameters
-from src.baseclasses.detector_information import Information
 
 logger = logging.getLogger(__name__)
 
@@ -39,13 +38,15 @@ def distribution(data_name: str) -> Information:
     parser = get_parser_ibp()
     args = parser.parse_args() 
 
+    cycle_version = 0
+
     id = datetime.now().strftime("%d%m%Y_%H%M%S")
-    output_path = pathlib.Path("output").joinpath(data_name)
+    output_path = pathlib.Path(f"output/{data_name}")
     save_path = output_path / id
-    os.makedirs(save_path, exist_ok=True)
+    save_path.mkdir(parents=True, exist_ok=True)
     args_dict = vars(args)
-    with open(os.path.join(save_path, "config.txt"), "w") as f:
-        f.write(json.dumps(args_dict, indent=4))
+    with open(f"{save_path}/'parsed_args.json'", 'w') as file:
+            ujson.dump(args_dict, file, indent=4)
     
     data_path = pathlib.Path("data")
     data_path = data_path / f"{data_name}.csv"
@@ -55,12 +56,13 @@ def distribution(data_name: str) -> Information:
     data = data.dropna(axis=1, how='all')
     data = data.dropna(axis=0)
     data = data.rename(columns={"Timestamp": "timestamp"})
-    # NOTE PLC_data_2 has labels for the cycles and system states
-    if data_name == "PLC_data_2":
-        ground_truth_label = data['State'].str.replace('State_', '').astype(int).values
-        cycle_column = data['Cycle'].str.replace('Cycle ', '').astype(int) - 1
-        data = data.drop(columns=['Cycle', 'State'], errors="ignore") 
-    data.replace({False: 0, True: 1}, inplace=True) 
+
+    if data_name == 'LAB_PLC_BINARY':
+        cycle_version = 1
+        # subprocess_labels = data['State'].str.extract('(\d+)').astype(int).squeeze()
+        # cycle_labels = data['Cycle'].str.extract('(\d+)').astype(int).squeeze()
+        data = data.drop(columns=['Cycle', 'State', 'Root_Cause'], errors="ignore")
+    data = data.replace({False: 0, True: 1})
     data.reset_index(inplace=True, drop=True)
     
     parameters = ProcessingParameters(
@@ -86,7 +88,9 @@ def distribution(data_name: str) -> Information:
         peak_rate=args.peak_rate,
         peak_prominence=args.peak_prominence,
         save_path=save_path,
-        columns=uniform_data.columns
+        columns=uniform_data.columns,
+        cycle_version=cycle_version,
+        data_path=save_path
     )  
     return info
 

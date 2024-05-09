@@ -44,7 +44,7 @@ def data_preprocessing(data: pd.DataFrame, params: ProcessingParameters
     frequency = compute_sampling_frequency(data=data,
                                            sampling_frequency_unit=params.sampling_frequency_unit,
                                            sampling_frequency_round=params.sampling_frequency_round)
-    data = data.asfreq(freq=str(frequency)+"L", method="ffill")
+    data = data.asfreq(freq=str(frequency) + "ms", method="ffill")
     data.reset_index(inplace=True, drop=True)
     return data, event_based_data, frequency
 

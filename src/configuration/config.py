@@ -16,8 +16,9 @@ def get_parser_ibp():
     parser = argparse.ArgumentParser()
     
     # --- Data params ----
-    parser.add_argument("--data_set", type=str, default="PLC_data_1",
-    help='''name of the dataset''')
+    parser.add_argument("--data_set", type=str, default="LAB_PLC_BINARY",
+    help='''name of the dataset:
+    LAB_PLC_BINARY''')
     parser.add_argument("--separator", type=str, default=",")
     
     

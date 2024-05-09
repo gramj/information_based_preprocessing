@@ -1,0 +1,8 @@
+----------------Parameters----------------
+Signals: 26
+States: 14
+Cycles: 400
+Noise [%]: 0
+Column names: ['Timestamp', 'Signal 1', 'Signal 2', 'Signal 3', 'Signal 4', 'Signal 5', 'Signal 6', 'Signal 7', 'Signal 8', 'Signal 9', 'Signal 10', 'Signal 11', 'Signal 12', 'Signal 13', 'Signal 14', 'Signal 15', 'Signal 16', 'Signal 17', 'Signal 18', 'Signal 19', 'Signal 20', 'Signal 21', 'Signal 22', 'Signal 23', 'Signal 24', 'Signal 25', 'Signal 26', 'Cycle', 'State', 'Root_Cause']
+Data shape: (121321, 30)
+Cycle Time: 140.6

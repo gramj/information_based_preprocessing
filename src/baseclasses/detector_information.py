@@ -1,7 +1,7 @@
 import pathlib
 import pandas as pd
-from typing import List
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from typing import List, Optional
 
 
 @dataclass()
@@ -46,4 +46,6 @@ class Information():
     peak_prominence: float
     save_path: pathlib.Path
     columns: List
+    cycle_version: int = field(default=0)
+    data_path: Optional[pathlib.Path] = field(default=None)
     
