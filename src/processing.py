@@ -23,6 +23,8 @@ def data_preprocessing(data: pd.DataFrame, params: ProcessingParameters
     """ 
     first_column = data.iloc[:, 0]
     data = data.drop(data.columns[0], axis=1)
+    # NOTE only the binary data should be left, so:
+    data = data.astype('int8')
     logger.info(f"raw {data.shape=}")
         
     indices = low_variance_filter(data=data, dynamic=params.dynamic_variance,
@@ -37,13 +39,14 @@ def data_preprocessing(data: pd.DataFrame, params: ProcessingParameters
     
     data.insert(0, "timestamp", first_column)
     data["timestamp"]= pd.to_datetime(data["timestamp"], unit='ns')
-    data = data.set_index("timestamp")
-    data = data.sort_index()
+    data.set_index('timestamp', inplace=True)
+    data.sort_index(inplace=True)
     event_based_data = data.copy()
 
     frequency = compute_sampling_frequency(data=data,
                                            sampling_frequency_unit=params.sampling_frequency_unit,
                                            sampling_frequency_round=params.sampling_frequency_round)
+    print(f"{data.index=}")
     data = data.asfreq(freq=str(frequency) + "ms", method="ffill")
     data.reset_index(inplace=True, drop=True)
     return data, event_based_data, frequency
